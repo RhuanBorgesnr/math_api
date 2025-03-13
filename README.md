@@ -1,31 +1,32 @@
-# Math API Documentation
+# Documentação da API de Matemática
 
-## Overview
+## Visão Geral
 
-The **Math API** is a RESTful API developed in Django that provides basic mathematical operations: **sum** and **average** of an integer vector. Additionally, the API logs the calculation history into a PostgreSQL database.
+A **Math API** é uma API RESTful desenvolvida em Django que fornece operações matemáticas básicas: **soma** e **média** de um vetor de números inteiros. Além disso, a API registra o histórico de cálculos em um banco de dados PostgreSQL.
 
-### Features
-- **Sum**: Adds all numbers in an array.
-- **Average**: Computes the arithmetic mean of the numbers in an array.
-- **History**: Logs each operation with details such as operation type, input numbers, result, and timestamp.
+### Funcionalidades
 
-## Requirements
+- **Soma**: Soma todos os números de um array.
+- **Média**: Calcula a média aritmética dos números em um array.
+- **Histórico**: Registra cada operação com detalhes como tipo de operação, números de entrada, resultado e data/hora.
+
+## Requisitos
 
 - Python 3.8+
-- Django 3.2+ and Django REST Framework
-- Docker and Docker Compose (for PostgreSQL)
-- PostgreSQL (running via Docker or installed locally)
+- Django 3.2+ e Django REST Framework
+- Docker e Docker Compose (para PostgreSQL)
+- PostgreSQL (executando via Docker ou instalado localmente)
 
-## Installation
+## Instalação
 
-### 1. Clone the Repository
+### 1. Clonar o Repositório
 
 ```bash
-git clone https://github.com/your-username/math_api.git
+git clone https://github.com/seu-usuario/math_api.git
 cd math_api
 ```
 
-### 2. Set Up a Virtual Environment
+### 2. Configurar um Ambiente Virtual
 
 ```bash
 python -m venv venv
@@ -33,18 +34,18 @@ source venv/bin/activate  # Linux/macOS
 venv\Scripts\activate     # Windows
 ```
 
-### 3. Install Dependencies
+### 3. Instalar Dependências
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Database Configuration with Docker
+## Configuração do Banco de Dados com Docker
 
-To store calculation history, use Docker Compose to launch a PostgreSQL container. Ensure the following `docker-compose.yml` file is in the project root:
+Para armazenar o histórico de cálculos, utilize o Docker Compose para iniciar um contêiner PostgreSQL. Certifique-se de que o seguinte arquivo `docker-compose.yml` esteja na raiz do projeto:
 
 ```yaml
-version: '3'
+version: "3"
 services:
   postgres:
     image: postgres:13
@@ -58,15 +59,15 @@ services:
       - "5432:5432"
 ```
 
-### Start the Database Container
+### Iniciar o Contêiner do Banco de Dados
 
 ```bash
 docker-compose up -d
 ```
 
-## Django Configuration
+## Configuração do Django
 
-Modify the `settings.py` file to configure PostgreSQL:
+Modifique o arquivo `settings.py` para configurar o PostgreSQL:
 
 ```python
 DATABASES = {
@@ -81,31 +82,32 @@ DATABASES = {
 }
 ```
 
-### Apply Migrations
+### Aplicar Migrações
 
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-## Running the Server
+## Executando o Servidor
 
-Start the Django development server:
+Inicie o servidor de desenvolvimento do Django:
 
 ```bash
 python manage.py runserver
 ```
 
-The API will be available at [http://localhost:8000](http://localhost:8000).
+A API estará disponível em [http://localhost:8000](http://localhost:8000).
 
-## API Documentation
+## Documentação da API
 
 ### Endpoints
 
-#### 1. Sum
+#### 1. Soma
+
 **Endpoint:** `POST /api/calculator/sum/`
 
-**Request Body (JSON):**
+**Corpo da Requisição (JSON):**
 
 ```json
 {
@@ -113,7 +115,7 @@ The API will be available at [http://localhost:8000](http://localhost:8000).
 }
 ```
 
-**Response (JSON):**
+**Resposta (JSON):**
 
 ```json
 {
@@ -121,10 +123,11 @@ The API will be available at [http://localhost:8000](http://localhost:8000).
 }
 ```
 
-#### 2. Average
+#### 2. Média
+
 **Endpoint:** `POST /api/calculator/average/`
 
-**Request Body (JSON):**
+**Corpo da Requisição (JSON):**
 
 ```json
 {
@@ -132,7 +135,7 @@ The API will be available at [http://localhost:8000](http://localhost:8000).
 }
 ```
 
-**Response (JSON):**
+**Resposta (JSON):**
 
 ```json
 {
@@ -140,29 +143,46 @@ The API will be available at [http://localhost:8000](http://localhost:8000).
 }
 ```
 
-## Example Requests Using cURL
+#### 2. Histórico de cálculos
 
-### Sum
-```bash
-curl -X POST \
-  -H "Content-Type: application/json" \
-  -d '{"numbers": [1, 2, 3, 4]}' \
-  http://localhost:8000/api/calculator/sum/
+**Endpoint:** `GET /api/calculator/history/`
+
+**Corpo da Requisição (JSON):**
+
+**Resposta (JSON):**
+
+```json
+{
+  "history": [
+    {
+      "id": 1,
+      "operation": "average",
+      "input_numbers": "[1, 2, 3, 4]",
+      "result": 2.5,
+      "created_at": "2025-03-13T12:04:58.740685Z"
+    }
+  ]
+}
 ```
 
-### Average
+## Exemplos de Requisições Usando cURL
+
+### Soma
+
 ```bash
-curl -X POST \
-  -H "Content-Type: application/json" \
-  -d '{"numbers": [1, 2, 3, 4]}' \
-  http://localhost:8000/api/calculator/average/
+curl -X POST   -H "Content-Type: application/json"   -d '{"numbers": [1, 2, 3, 4]}'   http://localhost:8000/api/calculator/sum/
 ```
 
-## Running Tests
+### Média
 
-Unit tests have been implemented for classes and endpoints. Run them using:
+```bash
+curl -X POST   -H "Content-Type: application/json"   -d '{"numbers": [1, 2, 3, 4]}'   http://localhost:8000/api/calculator/average/
+```
+
+## Executando Testes
+
+Testes unitários foram implementados para classes e endpoints. Execute-os usando:
 
 ```bash
 python manage.py test
 ```
-
