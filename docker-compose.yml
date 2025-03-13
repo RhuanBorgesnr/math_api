@@ -1,0 +1,12 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:13
+    container_name: math_api
+    restart: always
+    environment:
+      POSTGRES_DB: math_api_db
+      POSTGRES_USER: sa
+      POSTGRES_PASSWORD: pass123
+    ports:
+      - "5432:5432"
