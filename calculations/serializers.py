@@ -4,9 +4,27 @@ from .models import CalculationHistory
 
 
 class NumbersSerializer(serializers.Serializer):
+    """
+    NumbersSerializer is a serializer for validating a list of numbers.
+    Attributes:
+        numbers (ListField): A list of numbers (integers or floats) for processing. 
+                             It cannot be empty.
+    Methods:
+        validate_numbers(value: List[float]) -> List[float]:
+            Validates the 'numbers' list ensuring:
+            - The list is not empty.
+            - The input is a list or tuple.
+            - The list contains at most 100 items.
+            - All elements in the list are numbers (int or float).
+            - No element in the list is None.
+            Raises:
+                serializers.ValidationError: If the list is empty, contains more than 100 items, 
+                                             or contains invalid numbers.
+                TypeError: If the input is not a list or tuple, or if any element is not a number.
+    """
     numbers = serializers.ListField(
         child=serializers.FloatField(),
-        # allow_empty=False,
+        allow_empty=False,
         help_text="Lista de números (inteiros ou floats) para processamento."
     )
 
@@ -29,9 +47,3 @@ class NumbersSerializer(serializers.Serializer):
             raise serializers.ValidationError("Todos os itens da lista 'numbers' devem ser números válidos.")
 
         return value
-
-
-class CalculationHistorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CalculationHistory
-        fields = "__all__"

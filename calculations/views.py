@@ -54,8 +54,6 @@ class AverageView(APIView):
         return Response(serializer.errors, status=400)
 
 
-
-
 class CalculationHistoryView(APIView):
     def get(self, request):
         history = CalculationHistory.objects.all()
