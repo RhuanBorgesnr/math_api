@@ -1,7 +1,7 @@
 
 ## Visão Geral
 
-A **Math API** é uma API RESTful desenvolvida em Django que fornece operações matemáticas básicas: **soma** e **média** de um vetor de números inteiros. Além disso, a API registra o histórico de cálculos em um banco de dados PostgreSQL.
+A **Math API** é uma API RESTful desenvolvida em Django que fornece operações matemáticas básicas: **soma** e **média** de um vetor de números. Além disso, a API registra o histórico de cálculos em um banco de dados PostgreSQL.
 
 ### Funcionalidades
 
