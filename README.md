@@ -1,4 +1,3 @@
-# Documentação da API de Matemática
 
 ## Visão Geral
 
